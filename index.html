@@ -315,7 +315,7 @@ function playFx(name,gain=1){if(muted)return;prepareFx();const buf=fxBuffers[nam
 try{let a=fxFallback[name];if(!a){a=new Audio(name+'.wav?v=10');a.preload='auto';fxFallback[name]=a;}a.pause();a.currentTime=0;a.volume=Math.min(1,volume*gain);a.play().catch(()=>{});}catch(e){}}
 window.addEventListener('pointerdown',prepareFx,{once:true,passive:true});window.addEventListener('touchstart',prepareFx,{once:true,passive:true});
 // STORMFORGE: procedural, position-aware cinematic impacts (no giant centered sprites).
-const lowMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let lowMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let plasmaAt=0,plasmaLength=1120,plasmaOrigin={x:0,y:0},impactTrails=[];
 function ignitePlasma(x=w/2,y=h/2){plasmaOrigin={x,y};plasmaAt=performance.now();playFx('blast',.85)}
 function drawPlasma(){if(!plasmaAt)return;let t=(performance.now()-plasmaAt)/plasmaLength;if(t>=1){plasmaAt=0;return}let x=plasmaOrigin.x,y=plasmaOrigin.y,scale=Math.min(w,h),ease=1-Math.pow(1-t,3);
